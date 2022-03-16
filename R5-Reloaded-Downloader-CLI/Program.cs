@@ -5,14 +5,17 @@ using R5_Reloaded_Downloader_Library.SevenZip;
 using R5_Reloaded_Downloader_Library.Text;
 using SevenZip;
 using System;
+using System.Runtime.Versioning;
 
 namespace R5_Reloaded_Downloader_CLI
 {
+    [SupportedOSPlatform("windows")]
     class Program
     {
         private static string FinalDirectoryName = "R5-Reloaded";
         private static string ScriptsDirectoryPath = Path.Combine("platform", "scripts");
         private static string WorldsEdgeAfterDarkPath = "package";
+        private static long AboutByteSize = 64L * 1024L * 1024L * 1024L;
         static void Main(string[] args)
         {
             ConsoleExpansion.DisableEasyEditMode();
@@ -43,15 +46,28 @@ namespace R5_Reloaded_Downloader_CLI
                 return;
             }
 
+            if (!(InstalledApps.DisplayNameList() ?? Array.Empty<string>()).Contains("Origin"))
+            {
+                ConsoleExpansion.LogError("\'Origin\' is not installed.");
+                ConsoleExpansion.LogError("Do you want to continue?");
+                ConsoleExpansion.LogError("R5 Reloaded cannot be run without \'Origin\' installed.");
+                if (!ConsoleExpansion.ConsentInput()) ConsoleExpansion.Exit();
+            }
+
+            var DriveRoot = Path.GetPathRoot(DirectionPath) ?? string.Empty;
+            var DriveSize = FileExpansion.GetDriveFreeSpace(DirectionPath);
+            ConsoleExpansion.LogWrite("[" + DriveRoot + "] Drive Size >> " + StringProcessing.ByteToStringWithUnits(DriveSize));
+            ConsoleExpansion.LogWrite("Workspace Size required for this program >> " + StringProcessing.ByteToStringWithUnits(AboutByteSize));
+            if (AboutByteSize > DriveSize)
+            {
+                ConsoleExpansion.LogError("There is not enough space to install.");
+                ConsoleExpansion.LogWrite("Do you want to continue?");
+                if (!ConsoleExpansion.ConsentInput()) ConsoleExpansion.Exit();
+            }
+
             ConsoleExpansion.LogWrite("Do you want to start running?");
             ConsoleExpansion.LogWrite("It will take about 60 minutes to complete.");
-            ConsoleExpansion.LogWrite("Press Y to continue : ");
-            if (Console.ReadKey().Key != ConsoleKey.Y)
-            {
-                ConsoleExpansion.LogWrite("Canceled.");
-                ConsoleExpansion.Exit();
-                return;
-            }
+            if (!ConsoleExpansion.ConsentInput()) ConsoleExpansion.Exit();
 
             ConsoleExpansion.WriteWidth('=', "Downloading");
             var download = new Download(DirectionPath);
