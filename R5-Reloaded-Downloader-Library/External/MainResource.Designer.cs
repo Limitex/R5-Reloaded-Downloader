@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace R5_Reloaded_Downloader_Library {
+namespace R5_Reloaded_Downloader_Library.External {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace R5_Reloaded_Downloader_Library {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("R5_Reloaded_Downloader_Library.MainResource", typeof(MainResource).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("R5_Reloaded_Downloader_Library.External.MainResource", typeof(MainResource).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

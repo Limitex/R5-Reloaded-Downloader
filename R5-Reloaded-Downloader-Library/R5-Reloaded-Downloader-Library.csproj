@@ -8,15 +8,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Resources\7za.dll" />
+    <None Remove="External\Resources\7za.dll" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Resources\7za.dll" />
+    <EmbeddedResource Include="External\Resources\7za.dll" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="MainResource.Designer.cs">
+    <Compile Update="External\MainResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>MainResource.resx</DependentUpon>
@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="MainResource.resx">
+    <EmbeddedResource Update="External\MainResource.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>MainResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
