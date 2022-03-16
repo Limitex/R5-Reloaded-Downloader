@@ -6,6 +6,7 @@ using R5_Reloaded_Downloader_Library.Text;
 using SevenZip;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,10 +27,14 @@ namespace R5_Reloaded_Downloader_GUI
         private static int ProgressStatusValue = 0;
         private static int ProgressStatusMaxValue = 8;
 
+        private static Stopwatch sw = new Stopwatch();
+        private static string? TitleText;
+
         public Installer(MainForm form)
         {
             mainForm = form;
             mainForm.InstallButton.Click += new EventHandler(InstallButton_Click);
+            TitleText = mainForm.Text;
         }
 
         private void ControlEnabled(bool status)
@@ -101,7 +106,17 @@ namespace R5_Reloaded_Downloader_GUI
             }
 
             mainForm.FullStatusLabel.Text = "Starting...";
-
+            Task.Run(() =>
+            {
+                while (MainForm.IsDuringInstallation)
+                {
+                    var ts = sw.Elapsed;
+                    var str = ts.Hours.ToString("00") + ":" + ts.Minutes.ToString("00") + ":" + ts.Seconds.ToString("00");
+                    mainForm.Invoke(new Delegate(() => mainForm.Text = TitleText + " - " + str));
+                    if (MainForm.IsDuringInstallation) Thread.Sleep(1000);
+                }
+            });
+            sw.Restart();
             Task.Run(() => {
                 var download = new Download(DirectionPath);
                 download.ProgressEventReceives += HttpClientProcess_EventHandler;
@@ -146,6 +161,7 @@ namespace R5_Reloaded_Downloader_GUI
                     mainForm.FullStatusLabel.Text = "Done.";
                     ControlEnabled(true);
                     MainForm.IsDuringInstallation = false;
+                    sw.Stop();
                 }));
             });
         }
