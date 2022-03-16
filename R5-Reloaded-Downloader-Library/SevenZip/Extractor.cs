@@ -26,7 +26,7 @@ namespace R5_Reloaded_Downloader_Library.SevenZip
             SevenZipDll.Dispose();
         }
 
-        public string Run(string SourceArchive, bool DirectoryFix = false)
+        public string Run(string SourceArchive, bool DirectoryFix = true)
         {
             var dirName = Path.GetFileNameWithoutExtension(SourceArchive);
             var ExtractionDirectory = Path.Combine(Path.GetDirectoryName(SourceArchive) ?? string.Empty, dirName);
