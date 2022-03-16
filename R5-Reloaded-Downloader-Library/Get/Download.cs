@@ -19,7 +19,6 @@ namespace R5_Reloaded_Downloader_Library.Get
         public Download(string saveingDirectoryPath)
         {
             SaveingDirectoryPath = saveingDirectoryPath;
-            if (DirectoryExpansion.IsEmpty(SaveingDirectoryPath)) throw new Exception("The specified directory already exists.");
             DirectoryExpansion.CreateIfNotFound(SaveingDirectoryPath);
         }
 

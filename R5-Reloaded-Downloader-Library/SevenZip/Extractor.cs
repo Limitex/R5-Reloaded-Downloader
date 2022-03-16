@@ -28,7 +28,7 @@ namespace R5_Reloaded_Downloader_Library.SevenZip
 
         public string Run(string SourceArchive, string ExtractionDirectory, string? args = null)
         {
-            if (DirectoryExpansion.IsEmpty(ExtractionDirectory))
+            if (!DirectoryExpansion.IsEmpty(ExtractionDirectory))
                 throw new Exception("The extraction directory is not empty.");
 
             var extractor = new SevenZipExtractor(SourceArchive);
