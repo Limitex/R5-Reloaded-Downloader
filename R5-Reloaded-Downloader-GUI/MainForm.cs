@@ -1,3 +1,5 @@
+using System.Diagnostics;
+
 namespace R5_Reloaded_Downloader_GUI
 {
     public partial class MainForm : Form
@@ -5,6 +7,16 @@ namespace R5_Reloaded_Downloader_GUI
         public MainForm()
         {
             InitializeComponent();
+            _ = new LinkLabelOpener(this);
+        }
+
+        public static void ProcessStart(string fileName)
+        {
+            Process.Start(new ProcessStartInfo
+            {
+                UseShellExecute = true,
+                FileName = fileName,
+            });
         }
     }
 }
