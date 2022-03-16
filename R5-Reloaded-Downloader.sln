@@ -3,7 +3,31 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32228.430
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "R5-Reloaded-Downloader-CLI", "R5-Reloaded-Downloader-CLI\R5-Reloaded-Downloader-CLI.csproj", "{4252269F-1F51-491C-822F-8F960C925B19}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "R5-Reloaded-Downloader-GUI", "R5-Reloaded-Downloader-GUI\R5-Reloaded-Downloader-GUI.csproj", "{6521A6A0-259D-4A37-9DA0-0F864A6CDBBA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "R5-Reloaded-Downloader-Library", "R5-Reloaded-Downloader-Library\R5-Reloaded-Downloader-Library.csproj", "{E9D27DEF-6FF5-45FA-AB6B-FCAA2E51B4F4}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4252269F-1F51-491C-822F-8F960C925B19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4252269F-1F51-491C-822F-8F960C925B19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4252269F-1F51-491C-822F-8F960C925B19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4252269F-1F51-491C-822F-8F960C925B19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6521A6A0-259D-4A37-9DA0-0F864A6CDBBA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6521A6A0-259D-4A37-9DA0-0F864A6CDBBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6521A6A0-259D-4A37-9DA0-0F864A6CDBBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6521A6A0-259D-4A37-9DA0-0F864A6CDBBA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9D27DEF-6FF5-45FA-AB6B-FCAA2E51B4F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9D27DEF-6FF5-45FA-AB6B-FCAA2E51B4F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9D27DEF-6FF5-45FA-AB6B-FCAA2E51B4F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9D27DEF-6FF5-45FA-AB6B-FCAA2E51B4F4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
