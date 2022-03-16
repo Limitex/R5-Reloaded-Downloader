@@ -26,7 +26,7 @@ namespace R5_Reloaded_Downloader_Library.SevenZip
             SevenZipDll.Dispose();
         }
 
-        public string Run(string SourceArchive, bool DirectoryFix = true)
+        public string Run(string SourceArchive,bool DeleteSource = true, bool DirectoryFix = true)
         {
             var dirName = Path.GetFileNameWithoutExtension(SourceArchive);
             var ExtractionDirectory = Path.Combine(Path.GetDirectoryName(SourceArchive) ?? string.Empty, dirName);
@@ -35,7 +35,7 @@ namespace R5_Reloaded_Downloader_Library.SevenZip
             if (ProgressEventReceives != null) extractor.Extracting += ProgressEventReceives;
             //extractor.ExtractionFinished += (sender, args) => { };
             extractor.ExtractArchive(ExtractionDirectory);
-
+            if (DeleteSource) File.Delete(SourceArchive);
             if (DirectoryFix) DirectoryExpansion.DirectoryFix(ExtractionDirectory);
             return ExtractionDirectory;
         }
