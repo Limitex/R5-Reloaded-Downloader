@@ -6,6 +6,9 @@ namespace R5_Reloaded_Downloader_Library.IO
 {
     public static class DirectoryExpansion
     {
+        public static bool IsEmpty(string directory) =>
+            Directory.Exists(directory) && Directory.EnumerateFileSystemEntries(directory).Any();
+
         public static void CreateOverwrite(string path)
         {
             if (Directory.Exists(path)) DirectoryDelete(path);
