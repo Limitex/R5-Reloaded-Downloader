@@ -170,13 +170,13 @@ namespace R5_Reloaded_Downloader_GUI
 
         private void HttpClientProcess_EventHandler(long? totalFileSize, long totalBytesDownloaded, double? progressPercentage)
         {
-            var parcent = (int?)progressPercentage ?? 0;
+            var parcent = progressPercentage ?? 0;
             var downloadedByteSize = StringProcessing.ByteToStringWithUnits(totalBytesDownloaded);
             var totalByteSize = StringProcessing.ByteToStringWithUnits(totalFileSize ?? 0);
-            var progressPercent = parcent.ToString().PadLeft(3);
+            var progressPercent = ((int)parcent).ToString().PadLeft(3);
             mainForm.Invoke(new Delegate(() => {
                 mainForm.FullStatusLabel.Text = $"{downloadedByteSize} / {totalByteSize}  ({progressPercent}%) Downloading Completed.";
-                mainForm.MonoProgressBar.Value = parcent;
+                mainForm.MonoProgressBar.Value = (int)(parcent * 10f);
                 SetFullProgressValue(parcent);
             }));
         }
@@ -185,15 +185,15 @@ namespace R5_Reloaded_Downloader_GUI
         {
             mainForm.Invoke(new Delegate(() => {
                 mainForm.FullStatusLabel.Text = "(" + args.PercentDone.ToString().PadLeft(3) + "%) Extracting Completed.";
-                mainForm.MonoProgressBar.Value = args.PercentDone;
+                mainForm.MonoProgressBar.Value = (int)(args.PercentDone * 10f);
                 SetFullProgressValue(args.PercentDone);
             }));
         }
 
-        private void SetFullProgressValue(float value)
+        private void SetFullProgressValue(double value)
         {
-            var progress = (int)((100f * ProgressStatusValue + value) / ProgressStatusMaxValue);
-            mainForm.FullProgressBar.Value = progress < 100f ? progress : 100;
+            var progress = (int)((1000f * ProgressStatusValue + value * 10f) / ProgressStatusMaxValue);
+            mainForm.FullProgressBar.Value = progress < 1000f ? progress : 1000;
         }
     }
 }

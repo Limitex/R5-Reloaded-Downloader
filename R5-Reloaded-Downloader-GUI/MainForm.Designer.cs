@@ -166,6 +166,7 @@
             // FullProgressBar
             // 
             this.FullProgressBar.Location = new System.Drawing.Point(12, 360);
+            this.FullProgressBar.Maximum = 1000;
             this.FullProgressBar.Name = "FullProgressBar";
             this.FullProgressBar.Size = new System.Drawing.Size(331, 23);
             this.FullProgressBar.TabIndex = 17;
@@ -173,6 +174,7 @@
             // MonoProgressBar
             // 
             this.MonoProgressBar.Location = new System.Drawing.Point(12, 331);
+            this.MonoProgressBar.Maximum = 1000;
             this.MonoProgressBar.Name = "MonoProgressBar";
             this.MonoProgressBar.Size = new System.Drawing.Size(331, 23);
             this.MonoProgressBar.TabIndex = 16;
