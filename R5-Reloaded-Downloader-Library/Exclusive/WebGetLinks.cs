@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace R5_Reloaded_Downloader_Library.Exclusive
 {
-    public static class WebGetLink
+    public static class WebGetLinks
     {
         public static string DetoursR5()
         {
