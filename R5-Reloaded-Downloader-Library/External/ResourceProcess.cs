@@ -11,9 +11,9 @@ namespace R5_Reloaded_Downloader_Library.External
     {
         public string GetPath { get; private set; }
 
-        public ResourceProcess()
+        public ResourceProcess(string ResourceName)
         {
-            GetPath = ExportingFile(Path.Combine(Path.GetTempPath(), "7za.dll"), "7za.dll");
+            GetPath = ExportingFile(Path.Combine(Path.GetTempPath(), ResourceName), ResourceName);
         }
 
         public void Dispose()
