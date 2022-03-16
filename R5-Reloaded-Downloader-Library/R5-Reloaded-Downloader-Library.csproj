@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -8,11 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="External\Resources\7za.dll" />
+    <None Remove="External\Resources\7z.dll" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="External\Resources\7za.dll" />
+    <EmbeddedResource Include="External\Resources\7z.dll" />
   </ItemGroup>
 
   <ItemGroup>

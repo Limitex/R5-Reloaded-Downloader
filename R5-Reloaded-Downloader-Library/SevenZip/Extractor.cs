@@ -17,7 +17,7 @@ namespace R5_Reloaded_Downloader_Library.SevenZip
 
         public Extractor()
         {
-            SevenZipDll = new("7za.dll");
+            SevenZipDll = new("7z.dll");
             SevenZipBase.SetLibraryPath(SevenZipDll.GetPath);
         }
 

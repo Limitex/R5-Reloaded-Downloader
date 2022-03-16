@@ -63,9 +63,9 @@ namespace R5_Reloaded_Downloader_Library.External {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] _7za {
+        internal static byte[] _7z {
             get {
-                object obj = ResourceManager.GetObject("_7za", resourceCulture);
+                object obj = ResourceManager.GetObject("_7z", resourceCulture);
                 return ((byte[])(obj));
             }
         }
