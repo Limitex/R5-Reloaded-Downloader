@@ -116,7 +116,9 @@ namespace R5_Reloaded_Downloader_GUI
                     if (MainForm.IsDuringInstallation) Thread.Sleep(1000);
                 }
             });
+
             sw.Restart();
+
             Task.Run(() => {
                 var download = new Download(DirectionPath);
                 download.ProgressEventReceives += HttpClientProcess_EventHandler;
