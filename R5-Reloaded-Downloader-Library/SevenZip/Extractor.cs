@@ -1,4 +1,5 @@
 ﻿using R5_Reloaded_Downloader_Library.External;
+using R5_Reloaded_Downloader_Library.IO;
 using SevenZip;
 using System;
 using System.Collections.Generic;
@@ -27,7 +28,7 @@ namespace R5_Reloaded_Downloader_Library.SevenZip
 
         public string Run(string SourceArchive, string ExtractionDirectory, string? args = null)
         {
-            if (Directory.Exists(ExtractionDirectory) && Directory.EnumerateFileSystemEntries(ExtractionDirectory).Any())
+            if (DirectoryExpansion.IsEmpty(ExtractionDirectory))
                 throw new Exception("The extraction directory is not empty.");
 
             var extractor = new SevenZipExtractor(SourceArchive);
