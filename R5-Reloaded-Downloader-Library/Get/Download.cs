@@ -20,6 +20,7 @@ namespace R5_Reloaded_Downloader_Library.Get
         {
             SaveingDirectoryPath = saveingDirectoryPath;
             if (DirectoryExpansion.IsEmpty(SaveingDirectoryPath)) throw new Exception("The specified directory already exists.");
+            DirectoryExpansion.CreateIfNotFound(SaveingDirectoryPath);
         }
 
         public void Dispose()
