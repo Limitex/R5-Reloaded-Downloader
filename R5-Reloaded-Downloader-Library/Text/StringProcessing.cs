@@ -12,9 +12,9 @@ namespace R5_Reloaded_Downloader_Library.Text
 
         public static string ByteToStringWithUnits(float data)
         {
-            if (data == 0) return "0.000".PadLeft(7) + " Byte";
+            if (data == 0) return "0.000".PadLeft(7) + " B";
             var count = 0;
-            var text = new string[] { "Byte", "KB", "MB", "GB", "TB" };
+            var text = new string[] { " B", "KB", "MB", "GB", "TB" };
             while (data >= 1024f) { data /= 1024f; count++; }
             return data.ToString(".000").PadLeft(7) + " " + text[count];
         }

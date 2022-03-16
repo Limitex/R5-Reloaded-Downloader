@@ -15,6 +15,19 @@ namespace R5_Reloaded_Downloader_CLI
         private static string WorldsEdgeAfterDarkPath = "package";
         static void Main(string[] args)
         {
+            ConsoleExpansion.DisableEasyEditMode();
+            ConsoleExpansion.EnableVirtualTerminalProcessing();
+
+            Console.Write("\n" +
+                "  ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n" +
+                "  ┃                                 ┃\n" +
+                "  ┃      R5-Reloaded Downloader     ┃\n" +
+                "  ┃                                 ┃\n" +
+                "  ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n\n" +
+                "  This program was created by Limitex.\n" +
+                "  Please refer to the link below for the latest version of this program.\n\n" +
+                "  https://github.com/Limitex/R5-Reloaded-Downloader/releases \n\n" +
+                "Welcome!\n\n");
 
             ConsoleExpansion.LogWrite("Preparing...");
             var DirectionPath = Path.GetDirectoryName(Environment.ProcessPath);
@@ -26,6 +39,16 @@ namespace R5_Reloaded_Downloader_CLI
                 ConsoleExpansion.LogError("The directory already exists.");
                 ConsoleExpansion.LogError("Move or delete the directory.");
                 ConsoleExpansion.LogError("Path : " + DirectionPath);
+                ConsoleExpansion.Exit();
+                return;
+            }
+
+            ConsoleExpansion.LogWrite("Do you want to start running?");
+            ConsoleExpansion.LogWrite("It will take about 60 minutes to complete.");
+            ConsoleExpansion.LogWrite("Press Y to continue : ");
+            if (Console.ReadKey().Key != ConsoleKey.Y)
+            {
+                ConsoleExpansion.LogWrite("Canceled.");
                 ConsoleExpansion.Exit();
                 return;
             }
@@ -71,15 +94,15 @@ namespace R5_Reloaded_Downloader_CLI
 
         private static void HttpClientProcess_EventHandler(long? totalFileSize, long totalBytesDownloaded, double? progressPercentage)
         {
-            var downloadedByteSize = StringProcessing.ByteToStringWithUnits(totalBytesDownloaded);
-            var totalByteSize = StringProcessing.ByteToStringWithUnits(totalFileSize ?? 0);
-            var progressPercent = ((int?)progressPercentage ?? 0).ToString().PadLeft(2);
-            ConsoleExpansion.LogWrite($"{downloadedByteSize} / {totalByteSize} ({progressPercent}%)");
+            var downloadedByteSize = StringProcessing.ByteToStringWithUnits(totalBytesDownloaded).PadLeft(11);
+            var totalByteSize = StringProcessing.ByteToStringWithUnits(totalFileSize ?? 0).PadLeft(11);
+            var progressPercent = ((int?)progressPercentage ?? 0).ToString().PadLeft(3);
+            ConsoleExpansion.LogWrite($"{downloadedByteSize} / {totalByteSize}  ({progressPercent}%) Downloading Completed.");
         }
 
         private static void Extractor_EventHandler(object? sender, ProgressEventArgs args)
         {
-            ConsoleExpansion.LogWrite(args.PercentDone.ToString() + "% extracting completed.");
+            ConsoleExpansion.LogWrite("(" + args.PercentDone.ToString().PadLeft(3) + "%) Extracting Completed.");
         }
     }
 }
