@@ -36,17 +36,7 @@ namespace R5_Reloaded_Downloader_Library.SevenZip
             //extractor.ExtractionFinished += (sender, args) => { };
             extractor.ExtractArchive(ExtractionDirectory);
 
-            if (DirectoryFix)
-            {
-                var files = Directory.GetFiles(ExtractionDirectory);
-                var dirs = Directory.GetDirectories(ExtractionDirectory);
-                if (files.Length == 0 && dirs.Length == 1)
-                {
-                    Directory.Move(dirs[0], ExtractionDirectory + "_buffer");
-                    Directory.Delete(ExtractionDirectory);
-                    Directory.Move(ExtractionDirectory + "_buffer", ExtractionDirectory);
-                }
-            }
+            if (DirectoryFix) DirectoryExpansion.DirectoryFix(ExtractionDirectory);
             return ExtractionDirectory;
         }
     }

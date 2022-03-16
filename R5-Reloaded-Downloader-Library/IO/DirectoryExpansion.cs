@@ -9,6 +9,19 @@ namespace R5_Reloaded_Downloader_Library.IO
         public static bool IsEmpty(string directory) =>
             !(Directory.Exists(directory) && Directory.EnumerateFileSystemEntries(directory).Any());
 
+        public static string DirectoryFix(string directory)
+        {
+            var files = Directory.GetFiles(directory);
+            var dirs = Directory.GetDirectories(directory);
+            if (files.Length == 0 && dirs.Length == 1)
+            {
+                Directory.Move(dirs[0], directory + "_buffer");
+                Directory.Delete(directory);
+                Directory.Move(directory + "_buffer", directory);
+            }
+            return directory;
+        }
+
         public static void CreateOverwrite(string path)
         {
             if (Directory.Exists(path)) DirectoryDelete(path);
