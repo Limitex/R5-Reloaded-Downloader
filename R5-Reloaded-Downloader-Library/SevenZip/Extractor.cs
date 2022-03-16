@@ -26,17 +26,17 @@ namespace R5_Reloaded_Downloader_Library.SevenZip
             SevenZipDll.Dispose();
         }
 
-        public string Run(string SourceArchive, string ExtractionDirectory, string? args = null)
+        public string Run(string SourceArchive, bool DirectoryFix = false)
         {
-            if (!DirectoryExpansion.IsEmpty(ExtractionDirectory))
-                throw new Exception("The extraction directory is not empty.");
+            var dirName = Path.GetFileNameWithoutExtension(SourceArchive);
+            var ExtractionDirectory = Path.Combine(Path.GetDirectoryName(SourceArchive) ?? string.Empty, dirName);
 
             var extractor = new SevenZipExtractor(SourceArchive);
             if (ProgressEventReceives != null) extractor.Extracting += ProgressEventReceives;
             //extractor.ExtractionFinished += (sender, args) => { };
             extractor.ExtractArchive(ExtractionDirectory);
 
-            if (args == "f")
+            if (DirectoryFix)
             {
                 var files = Directory.GetFiles(ExtractionDirectory);
                 var dirs = Directory.GetDirectories(ExtractionDirectory);
