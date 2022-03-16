@@ -1,4 +1,6 @@
-﻿using System;
+﻿using R5_Reloaded_Downloader_Library.IO;
+using R5_Reloaded_Downloader_Library.Other;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,14 +10,30 @@ namespace R5_Reloaded_Downloader_Library.Get
 {
     public class Download : IDisposable
     {
-        public Download()
-        {
+        public event ProgressChangedHandler? ProgressEventReceives;
 
+        private string SaveingDirectoryPath;
+
+        private HttpClientProgress? httpClient;
+
+        public Download(string saveingDirectoryPath)
+        {
+            SaveingDirectoryPath = saveingDirectoryPath;
+            if (DirectoryExpansion.IsEmpty(SaveingDirectoryPath)) throw new Exception("The specified directory already exists.");
         }
 
         public void Dispose()
         {
+            if (httpClient != null) httpClient.Dispose();
+        }
 
+        public string Run(string address)
+        {
+            var path = Path.Combine(SaveingDirectoryPath, Path.GetFileName(address));
+            httpClient = new(address, path);
+            if (ProgressEventReceives != null) httpClient.ProgressChanged += ProgressEventReceives;
+            httpClient.StartDownload().Wait();
+            return path;
         }
     }
 }
