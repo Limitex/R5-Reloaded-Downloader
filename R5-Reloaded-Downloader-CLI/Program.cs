@@ -58,12 +58,6 @@ namespace R5_Reloaded_Downloader_CLI
             extractor.Dispose();
             ConsoleExpansion.WriteWidth('=');
 
-            ConsoleExpansion.LogDebug(detoursR5DirPath);
-            ConsoleExpansion.LogDebug(scriptsR5DirPath);
-            ConsoleExpansion.LogDebug(worldsEdgeAfterDarkDirPath);
-            ConsoleExpansion.LogDebug(apexClientDirPath);
-            Console.ReadLine();
-
             ConsoleExpansion.LogWrite("Creating the R5-Reloaded");
 
             DirectoryExpansion.MoveOverwrite(detoursR5DirPath, apexClientDirPath);
