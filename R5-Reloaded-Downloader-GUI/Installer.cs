@@ -131,7 +131,8 @@ namespace R5_Reloaded_Downloader_GUI
 
         private void SetFullProgressValue(float value)
         {
-            mainForm.FullProgressBar.Value = (int)((100f * ProgressStatusValue + value) / ProgressStatusMaxValue);
+            var progress = (int)((100f * ProgressStatusValue + value) / ProgressStatusMaxValue);
+            mainForm.FullProgressBar.Value = progress < 100f ? progress : 100;
         }
     }
 }
