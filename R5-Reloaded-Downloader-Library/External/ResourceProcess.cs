@@ -18,7 +18,7 @@ namespace R5_Reloaded_Downloader_Library.External
 
         public void Dispose()
         {
-            File.Delete(GetPath);
+
         }
 
         private static string ExportingFile(string path, string resource)
