@@ -5,7 +5,7 @@ using R5_Reloaded_Downloader_Library.Text;
 using SevenZip;
 using System;
 
-namespace ConsoleApp1
+namespace R5_Reloaded_Downloader_CLI
 {
     class Program
     {
