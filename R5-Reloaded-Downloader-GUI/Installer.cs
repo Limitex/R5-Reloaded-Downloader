@@ -75,6 +75,7 @@ namespace R5_Reloaded_Downloader_GUI
                 {
                     ControlEnabled(true);
                     MainForm.IsDuringInstallation = false;
+                    mainForm.FullStatusLabel.Text = "...";
                     return;
                 }
                 ConsoleExpansion.LogError("There is not enough space to install.");
@@ -91,9 +92,14 @@ namespace R5_Reloaded_Downloader_GUI
                 {
                     ControlEnabled(true);
                     MainForm.IsDuringInstallation = false;
+                    mainForm.FullStatusLabel.Text = "...";
                     return;
                 }
             }
+
+            mainForm.FullStatusLabel.Text = "Deleteing...";
+            DirectoryExpansion.DirectoryDelete(DirectionPath);
+            mainForm.FullStatusLabel.Text = "...";
 
             if (MessageBox.Show("Ready was exit.\n" +
                 "Do you want to start the installation?\n" +
@@ -102,6 +108,7 @@ namespace R5_Reloaded_Downloader_GUI
             {
                 ControlEnabled(true);
                 MainForm.IsDuringInstallation = false;
+                mainForm.FullStatusLabel.Text = "...";
                 return;
             }
 
