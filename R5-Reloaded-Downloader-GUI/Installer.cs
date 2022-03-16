@@ -21,6 +21,7 @@ namespace R5_Reloaded_Downloader_GUI
         private static readonly string ScriptsDirectoryPath = Path.Combine("platform", "scripts");
         private static readonly string WorldsEdgeAfterDarkPath = "package";
         private static readonly string ExecutableFileName = "launcher.exe";
+        private static readonly long AboutByteSize = 64L * 1024L * 1024L * 1024L;
 
         private static int ProgressStatusValue = 0;
         private static int ProgressStatusMaxValue = 8;
@@ -54,10 +55,52 @@ namespace R5_Reloaded_Downloader_GUI
             ControlEnabled(false);
             MainForm.IsDuringInstallation = true;
 
-            mainForm.FullStatusLabel.Text = $"Preparing...";
+            mainForm.FullStatusLabel.Text = "Preparing...";
             var DirectionPath = mainForm.PathSelectTextBox.Text ?? string.Empty;
             var shortcutCreate_desktop = mainForm.CreateDesktopShortcutCheckBox.Checked;
             var shortcutCreate_startmenu = mainForm.AddToStartMenuShortcutCheckBox.Checked;
+
+            if (AboutByteSize > FileExpansion.GetDriveFreeSpace(DirectionPath))
+            {
+                var dr = MessageBox.Show("There is not enough space to install.\n" +
+                    "You need at least " + StringProcessing.ByteToStringWithUnits(AboutByteSize) + " to install.\n" +
+                    "Do you want to continue?", "Warning",
+                    MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+                if (dr == DialogResult.Cancel)
+                {
+                    ControlEnabled(true);
+                    MainForm.IsDuringInstallation = false;
+                    return;
+                }
+                ConsoleExpansion.LogError("There is not enough space to install.");
+                ConsoleExpansion.LogWrite("Do you want to continue?");
+                if (!ConsoleExpansion.ConsentInput()) ConsoleExpansion.Exit();
+            }
+
+            if (!DirectoryExpansion.IsEmpty(DirectionPath))
+            {
+                var dr = MessageBox.Show("The directory already exists. Move or delete the directory.\n" +
+                    "Path : " + DirectionPath + "\nDo you want to delete it and continue?", "Warning",
+                    MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+                if (dr == DialogResult.Cancel)
+                {
+                    ControlEnabled(true);
+                    MainForm.IsDuringInstallation = false;
+                    return;
+                }
+            }
+
+            if (MessageBox.Show("Ready was exit.\n" +
+                "Do you want to start the installation?\n" +
+                "It will take about 60 minutes to complete.", "Infomation",
+                MessageBoxButtons.OKCancel, MessageBoxIcon.Information) == DialogResult.Cancel)
+            {
+                ControlEnabled(true);
+                MainForm.IsDuringInstallation = false;
+                return;
+            }
+
+            mainForm.FullStatusLabel.Text = "Starting...";
 
             Task.Run(() => {
                 var download = new Download(DirectionPath);
@@ -75,7 +118,7 @@ namespace R5_Reloaded_Downloader_GUI
                 worldsEdgeAfterDarkDirPath = extractor.Run(worldsEdgeAfterDarkDirPath); ProgressStatusValue = 7;
                 apexClientDirPath = extractor.Run(apexClientDirPath); ProgressStatusValue = 8;
                 extractor.Dispose();
-                mainForm.Invoke(new Delegate(() => mainForm.FullStatusLabel.Text = "Creating the R5-Reloaded"));
+                mainForm.Invoke(new Delegate(() => mainForm.FullStatusLabel.Text = "Creating the R5-Reloaded..."));
                 DirectoryExpansion.MoveOverwrite(detoursR5DirPath, apexClientDirPath);
                 Directory.Move(scriptsR5DirPath, Path.Combine(apexClientDirPath, ScriptsDirectoryPath));
                 DirectoryExpansion.MoveOverwrite(Path.Combine(worldsEdgeAfterDarkDirPath, WorldsEdgeAfterDarkPath), apexClientDirPath);

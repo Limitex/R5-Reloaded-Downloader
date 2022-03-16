@@ -1,3 +1,4 @@
+using R5_Reloaded_Downloader_Library.Get;
 using System.Diagnostics;
 
 namespace R5_Reloaded_Downloader_GUI
@@ -33,6 +34,16 @@ namespace R5_Reloaded_Downloader_GUI
                 {
                     e.Cancel = true;
                 }
+            }
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            if (!(InstalledApps.DisplayNameList() ?? Array.Empty<string>()).Contains("Origin"))
+            {
+                MessageBox.Show("\'Origin\' is not installed.\n" +
+                    "R5 Reloaded cannot be run without \'Origin\' installed.", "Warning",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
     }
