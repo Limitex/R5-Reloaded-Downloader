@@ -12,6 +12,7 @@ namespace R5_Reloaded_Downloader_Library.IO
     public static class ConsoleExpansion
     {
         private static readonly int InformationMaxWidth = 5;
+        private static readonly int ConsentMaxAttempts = 5;
 
         [DllImport("kernel32.dll", SetLastError = true)] private static extern IntPtr GetStdHandle(int nStdHandle);
         [DllImport("kernel32.dll")] private static extern bool GetConsoleMode(IntPtr hConsoleHandle, out uint lpMode);
@@ -45,6 +46,34 @@ namespace R5_Reloaded_Downloader_Library.IO
         public static void LogError(string value) => Console.Write('\n' + LogInfo("Error", "Red", value));
         public static void LogDebug(string value) => Console.Write('\n' + LogInfo("Debug", "Blue", value));
         public static void LogInput(string value) => Console.Write('\n' + LogInfo("Input", "Cyan", value));
+
+        public static bool ConsentInput(string? CanselMassage = null)
+        {
+            var ConsentAttempts = 0;
+            while (ConsentAttempts < ConsentMaxAttempts)
+            {
+                LogInput("Yes No (y/n) : ");
+                ConsoleKey key;
+                do key = Console.ReadKey().Key;
+                while (key == ConsoleKey.Escape);
+                switch (key)
+                {
+                    case ConsoleKey.Y:
+                        return true;
+                    case ConsoleKey.N:
+                        LogWrite(CanselMassage ?? "The operation was canceled by the user.");
+                        return false;
+                    default:
+                        ConsentAttempts++;
+                        if (ConsentAttempts < ConsentMaxAttempts)
+                            LogError("Enter either Y or N. Type it again.");
+                        break;
+                }
+            }
+            LogError("Max attempts has been reached.");
+            Exit();
+            return false;
+        }
 
         public static void WriteWidth(char c, string? text = null)
         {
