@@ -32,7 +32,8 @@ namespace R5_Reloaded_Downloader_Library.Get
             var path = Path.Combine(SaveingDirectoryPath, Path.GetFileName(address));
             httpClient = new(address, path);
             if (ProgressEventReceives != null) httpClient.ProgressChanged += ProgressEventReceives;
-            httpClient.StartDownload().Wait();
+            try { httpClient.StartDownload().Wait(); }
+            catch (AggregateException) { }
             return path;
         }
     }
