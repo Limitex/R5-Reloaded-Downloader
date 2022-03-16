@@ -181,7 +181,7 @@
             // 
             this.FullStatusLabel.Location = new System.Drawing.Point(12, 386);
             this.FullStatusLabel.Name = "FullStatusLabel";
-            this.FullStatusLabel.Size = new System.Drawing.Size(331, 68);
+            this.FullStatusLabel.Size = new System.Drawing.Size(331, 39);
             this.FullStatusLabel.TabIndex = 15;
             this.FullStatusLabel.Text = "...";
             // 
