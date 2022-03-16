@@ -20,7 +20,7 @@ namespace R5_Reloaded_Downloader_GUI
         private MainForm mainForm;
         private static readonly string ScriptsDirectoryPath = Path.Combine("platform", "scripts");
         private static readonly string WorldsEdgeAfterDarkPath = "package";
-        private static readonly string ExecutableFileName = "r5reloaded.exe";
+        private static readonly string ExecutableFileName = "launcher.exe";
 
         private static int ProgressStatusValue = 0;
         private static int ProgressStatusMaxValue = 8;
