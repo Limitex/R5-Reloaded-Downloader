@@ -69,7 +69,7 @@ namespace R5_Reloaded_Downloader_CLI
             ConsoleExpansion.LogWrite("It will take about 60 minutes to complete.");
             if (!ConsoleExpansion.ConsentInput()) ConsoleExpansion.Exit();
 
-            ConsoleExpansion.WriteWidth('=', "Downloading");
+            ConsoleExpansion.WriteWidth('=', " Downloading");
             var download = new Download(DirectionPath);
             download.ProgressEventReceives += HttpClientProcess_EventHandler;
             ConsoleExpansion.WriteWidth('-', "Detours_R5");
