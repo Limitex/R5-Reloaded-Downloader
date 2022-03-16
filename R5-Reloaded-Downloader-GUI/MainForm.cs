@@ -8,6 +8,7 @@ namespace R5_Reloaded_Downloader_GUI
         {
             InitializeComponent();
             _ = new LinkLabelOpener(this);
+            _ = new DirectorySelector(this);
         }
 
         public static void ProcessStart(string fileName)
