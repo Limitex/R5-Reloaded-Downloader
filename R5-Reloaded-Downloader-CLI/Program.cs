@@ -45,7 +45,6 @@ namespace R5_Reloaded_Downloader_CLI
             var totalByteSize = StringProcessing.ByteToStringWithUnits(totalFileSize ?? 0);
             var progressPercent = ((int?)progressPercentage ?? 0).ToString().PadLeft(2);
             ConsoleExpansion.LogWrite($"{downloadedByteSize} / {totalByteSize} ({progressPercent}%)");
-            Thread.Sleep(100);
         }
 
         private static void Extractor_EventHandler(object? sender, ProgressEventArgs args)
