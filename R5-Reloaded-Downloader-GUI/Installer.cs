@@ -51,6 +51,7 @@ namespace R5_Reloaded_Downloader_GUI
             FileExpansion.CreateShortcut(path, "R5-Reloaded", LinkDestination, "");
             FileExpansion.CreateShortcut(path, "R5-Reloaded (Debug)", LinkDestination, "-debug");
             FileExpansion.CreateShortcut(path, "R5-Reloaded (Release)", LinkDestination, "-release");
+            FileExpansion.CreateShortcut(path, "R5-Reloaded (Dedicated Dev)", LinkDestination, "-dedicated_dev");
             FileExpansion.CreateShortcut(path, "R5-Reloaded (Dedicated)", LinkDestination, "-dedicated");
             FileExpansion.CreateShortcut(path, "Scripts", scriptsPath, "");
         }
