@@ -25,7 +25,7 @@ namespace R5_Reloaded_Downloader_GUI
         private static readonly long AboutByteSize = 64L * 1024L * 1024L * 1024L;
 
         private static int ProgressStatusValue = 0;
-        private static int ProgressStatusMaxValue = 8;
+        private static int ProgressStatusMaxValue = 9;
 
         private static Stopwatch sw = new Stopwatch();
         private static string? TitleText;
@@ -132,18 +132,20 @@ namespace R5_Reloaded_Downloader_GUI
                 download.ProgressEventReceives += HttpClientProcess_EventHandler;
                 var detoursR5DirPath = download.Run(WebGetLinks.DetoursR5()); ProgressStatusValue = 1;
                 var scriptsR5DirPath = download.Run(WebGetLinks.ScriptsR5()); ProgressStatusValue = 2;
-                var worldsEdgeAfterDarkDirPath = download.Run(WebGetLinks.WorldsEdgeAfterDark()); ProgressStatusValue = 3;
-                var apexClientDirPath = download.Run(WebGetLinks.ApexClient()); ProgressStatusValue = 4;
+                var updaterR5FilePath = download.Run(WebGetLinks.UpdaterR5()); ProgressStatusValue = 3;
+                var worldsEdgeAfterDarkDirPath = download.Run(WebGetLinks.WorldsEdgeAfterDark()); ProgressStatusValue = 4;
+                var apexClientDirPath = download.Run(WebGetLinks.ApexClient()); ProgressStatusValue = 5;
                 download.Dispose();
 
                 var extractor = new Extractor();
                 extractor.ProgressEventReceives += Extractor_EventHandler;
-                detoursR5DirPath = extractor.Run(detoursR5DirPath); ProgressStatusValue = 5;
-                scriptsR5DirPath = extractor.Run(scriptsR5DirPath); ProgressStatusValue = 6;
-                worldsEdgeAfterDarkDirPath = extractor.Run(worldsEdgeAfterDarkDirPath); ProgressStatusValue = 7;
-                apexClientDirPath = extractor.Run(apexClientDirPath); ProgressStatusValue = 8;
+                detoursR5DirPath = extractor.Run(detoursR5DirPath); ProgressStatusValue = 6;
+                scriptsR5DirPath = extractor.Run(scriptsR5DirPath); ProgressStatusValue = 7;
+                worldsEdgeAfterDarkDirPath = extractor.Run(worldsEdgeAfterDarkDirPath); ProgressStatusValue = 8;
+                apexClientDirPath = extractor.Run(apexClientDirPath); ProgressStatusValue = 9;
                 extractor.Dispose();
                 mainForm.Invoke(new Delegate(() => mainForm.FullStatusLabel.Text = "Creating the R5-Reloaded..."));
+                FileExpansion.Move(updaterR5FilePath, apexClientDirPath);
                 DirectoryExpansion.MoveOverwrite(detoursR5DirPath, apexClientDirPath);
                 Directory.Move(scriptsR5DirPath, Path.Combine(apexClientDirPath, ScriptsDirectoryPath));
                 DirectoryExpansion.MoveOverwrite(Path.Combine(worldsEdgeAfterDarkDirPath, WorldsEdgeAfterDarkPath), apexClientDirPath);
