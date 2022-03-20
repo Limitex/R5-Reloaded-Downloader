@@ -44,6 +44,7 @@
             this.MonoProgressBar = new System.Windows.Forms.ProgressBar();
             this.FullStatusLabel = new System.Windows.Forms.Label();
             this.InstallButton = new System.Windows.Forms.Button();
+            this.StepStatusLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label3
@@ -181,29 +182,38 @@
             // 
             // FullStatusLabel
             // 
-            this.FullStatusLabel.Location = new System.Drawing.Point(12, 386);
+            this.FullStatusLabel.Location = new System.Drawing.Point(12, 401);
             this.FullStatusLabel.Name = "FullStatusLabel";
-            this.FullStatusLabel.Size = new System.Drawing.Size(331, 39);
+            this.FullStatusLabel.Size = new System.Drawing.Size(331, 45);
             this.FullStatusLabel.TabIndex = 15;
             this.FullStatusLabel.Text = "...";
             // 
             // InstallButton
             // 
-            this.InstallButton.Location = new System.Drawing.Point(268, 428);
+            this.InstallButton.Location = new System.Drawing.Point(268, 420);
             this.InstallButton.Name = "InstallButton";
             this.InstallButton.Size = new System.Drawing.Size(75, 23);
             this.InstallButton.TabIndex = 18;
             this.InstallButton.Text = "Install";
             this.InstallButton.UseVisualStyleBackColor = true;
             // 
+            // StepStatusLabel
+            // 
+            this.StepStatusLabel.Location = new System.Drawing.Point(12, 386);
+            this.StepStatusLabel.Name = "StepStatusLabel";
+            this.StepStatusLabel.Size = new System.Drawing.Size(331, 15);
+            this.StepStatusLabel.TabIndex = 15;
+            this.StepStatusLabel.Text = "...";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(355, 463);
+            this.ClientSize = new System.Drawing.Size(355, 455);
             this.Controls.Add(this.InstallButton);
             this.Controls.Add(this.FullProgressBar);
             this.Controls.Add(this.MonoProgressBar);
+            this.Controls.Add(this.StepStatusLabel);
             this.Controls.Add(this.FullStatusLabel);
             this.Controls.Add(this.AddToStartMenuShortcutCheckBox);
             this.Controls.Add(this.CreateDesktopShortcutCheckBox);
@@ -246,5 +256,6 @@
         public ProgressBar MonoProgressBar;
         public Label FullStatusLabel;
         public Button InstallButton;
+        public Label StepStatusLabel;
     }
 }
