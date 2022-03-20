@@ -76,6 +76,8 @@ namespace R5_Reloaded_Downloader_CLI
             var detoursR5DirPath = download.Run(WebGetLinks.DetoursR5());
             ConsoleExpansion.WriteWidth('-', "Scripts_R5");
             var scriptsR5DirPath = download.Run(WebGetLinks.ScriptsR5());
+            ConsoleExpansion.WriteWidth('-', "R5 Updater");
+            var updaterR5FilePath = download.Run(WebGetLinks.UpdaterR5());
             ConsoleExpansion.WriteWidth('-', "Worlds Edge After Dark");
             var worldsEdgeAfterDarkDirPath = download.Run(WebGetLinks.WorldsEdgeAfterDark());
             ConsoleExpansion.WriteWidth('-', "Apex Client S3");
@@ -99,6 +101,7 @@ namespace R5_Reloaded_Downloader_CLI
 
             ConsoleExpansion.LogWrite("Creating the R5-Reloaded");
 
+            FileExpansion.Move(updaterR5FilePath, apexClientDirPath);
             DirectoryExpansion.MoveOverwrite(detoursR5DirPath, apexClientDirPath);
             Directory.Move(scriptsR5DirPath, Path.Combine(apexClientDirPath, ScriptsDirectoryPath));
             DirectoryExpansion.MoveOverwrite(Path.Combine(worldsEdgeAfterDarkDirPath, WorldsEdgeAfterDarkPath), apexClientDirPath);
