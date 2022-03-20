@@ -23,7 +23,8 @@ namespace R5_Reloaded_Downloader_GUI
         private static readonly string WorldsEdgeAfterDarkPath = "package";
         private static readonly string ExecutableFileName = "launcher.exe";
         private static readonly long AboutByteSize = 64L * 1024L * 1024L * 1024L;
-        
+
+        private static readonly int MaxPercentValue = 100;
         private static readonly int ProgressStatusMaxValue = 10;
         private static int ProgressStatusValue = 0;
 
@@ -199,7 +200,7 @@ namespace R5_Reloaded_Downloader_GUI
             var progressPercent = ((int)parcent).ToString().PadLeft(3);
             mainForm.Invoke(new Delegate(() => {
                 mainForm.FullStatusLabel.Text = $"{downloadedByteSize} / {totalByteSize}  ({progressPercent}%) Downloading Completed.";
-                mainForm.MonoProgressBar.Value = (int)(parcent * 10f);
+                mainForm.MonoProgressBar.Value = (int)(parcent * mainForm.MonoProgressBar.Maximum / MaxPercentValue);
                 SetFullProgressValue(parcent);
             }));
         }
@@ -208,16 +209,15 @@ namespace R5_Reloaded_Downloader_GUI
         {
             mainForm.Invoke(new Delegate(() => {
                 mainForm.FullStatusLabel.Text = "(" + args.PercentDone.ToString().PadLeft(3) + "%) Extracting Completed.";
-                mainForm.MonoProgressBar.Value = (int)(args.PercentDone * 10f);
+                mainForm.MonoProgressBar.Value = (int)(args.PercentDone * mainForm.MonoProgressBar.Maximum / MaxPercentValue);
                 SetFullProgressValue(args.PercentDone);
             }));
         }
 
         private void SetFullProgressValue(double value)
         {
-            var MaxInputValue = 100;
             var MaxProgressValue = mainForm.FullProgressBar.Maximum;
-            var progress = (int)(MaxProgressValue * (ProgressStatusValue + (value / MaxInputValue)) / ProgressStatusMaxValue);
+            var progress = (int)(MaxProgressValue * (ProgressStatusValue + (value / MaxPercentValue)) / ProgressStatusMaxValue);
             mainForm.FullProgressBar.Value = progress < MaxProgressValue ? progress : MaxProgressValue;
         }
 
