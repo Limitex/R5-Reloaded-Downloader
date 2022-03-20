@@ -25,7 +25,7 @@ namespace R5_Reloaded_Downloader_GUI
         private static readonly long AboutByteSize = 64L * 1024L * 1024L * 1024L;
         private static readonly int MaxPercentValue = 100;
 
-        private static readonly int ProgressStatusMaxValue = 10;
+        private static readonly int NumOfCalls_SetStepStatusAutoCount = 10;
         
         private static Stopwatch sw = new Stopwatch();
         private static int ProgressStatusValue = 0;
@@ -132,31 +132,31 @@ namespace R5_Reloaded_Downloader_GUI
             Task.Run(() => {
                 var download = new Download(DirectionPath);
                 download.ProgressEventReceives += HttpClientProcess_EventHandler;
-                SetStepStatus("downloading detours r5...");
+                SetStepStatusAutoCount("downloading detours r5...");
                 var detoursR5DirPath = download.Run(WebGetLinks.DetoursR5());
-                SetStepStatus("downloading scripts r5...");
+                SetStepStatusAutoCount("downloading scripts r5...");
                 var scriptsR5DirPath = download.Run(WebGetLinks.ScriptsR5());
-                SetStepStatus("downloading r5 updater...");
+                SetStepStatusAutoCount("downloading r5 updater...");
                 var updaterR5FilePath = download.Run(WebGetLinks.UpdaterR5());
-                SetStepStatus("downloading worlds edge after dark...");
+                SetStepStatusAutoCount("downloading worlds edge after dark...");
                 var worldsEdgeAfterDarkDirPath = download.Run(WebGetLinks.WorldsEdgeAfterDark());
-                SetStepStatus("downloading apex client s3...");
+                SetStepStatusAutoCount("downloading apex client s3...");
                 var apexClientDirPath = download.Run(WebGetLinks.ApexClient()); 
                 download.Dispose();
 
                 var extractor = new Extractor();
                 extractor.ProgressEventReceives += Extractor_EventHandler;
-                SetStepStatus("extracting detours r5...");
+                SetStepStatusAutoCount("extracting detours r5...");
                 detoursR5DirPath = extractor.Run(detoursR5DirPath);
-                SetStepStatus("extracting scripts r5...");
+                SetStepStatusAutoCount("extracting scripts r5...");
                 scriptsR5DirPath = extractor.Run(scriptsR5DirPath);
-                SetStepStatus("extracting worlds edge after dark...");
+                SetStepStatusAutoCount("extracting worlds edge after dark...");
                 worldsEdgeAfterDarkDirPath = extractor.Run(worldsEdgeAfterDarkDirPath);
-                SetStepStatus("extracting apex client s3...");
+                SetStepStatusAutoCount("extracting apex client s3...");
                 apexClientDirPath = extractor.Run(apexClientDirPath);
                 extractor.Dispose();
 
-                SetStepStatus();
+                SetStepStatusAutoCount();
                 mainForm.Invoke(new Delegate(() => mainForm.FullStatusLabel.Text = "Creating the R5-Reloaded..."));
                 FileExpansion.Move(updaterR5FilePath, apexClientDirPath);
                 DirectoryExpansion.MoveOverwrite(detoursR5DirPath, apexClientDirPath);
@@ -218,15 +218,15 @@ namespace R5_Reloaded_Downloader_GUI
         private void SetFullProgressValue(double value)
         {
             var MaxProgressValue = mainForm.FullProgressBar.Maximum;
-            var progress = (int)(MaxProgressValue * (ProgressStatusValue + (value / MaxPercentValue)) / ProgressStatusMaxValue);
+            var progress = (int)(MaxProgressValue * (ProgressStatusValue + (value / MaxPercentValue)) / NumOfCalls_SetStepStatusAutoCount);
             mainForm.FullProgressBar.Value = progress < MaxProgressValue ? progress : MaxProgressValue;
         }
 
-        private void SetStepStatus(string str = "")
+        private void SetStepStatusAutoCount(string str = "")
         {
             mainForm.Invoke(new Delegate(() => {
                 ProgressStatusValue++;
-                mainForm.StepStatusLabel.Text = "Step (" + ProgressStatusValue + "/" + ProgressStatusMaxValue + ")" + (str != "" ? " : " : "") + str;
+                mainForm.StepStatusLabel.Text = "Step (" + ProgressStatusValue + "/" + NumOfCalls_SetStepStatusAutoCount + ")" + (str != "" ? " : " : "") + str;
             }));
         }
     }
