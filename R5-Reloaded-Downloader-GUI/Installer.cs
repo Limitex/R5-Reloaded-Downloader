@@ -187,6 +187,10 @@ namespace R5_Reloaded_Downloader_GUI
                     mainForm.MonoProgressBar.Value = mainForm.MonoProgressBar.Maximum;
                     mainForm.StepStatusLabel.Text = "Done.";
                     mainForm.FullStatusLabel.Text = "";
+
+                    MessageBox.Show("The installation is complete.\nYou can exit the this software.", 
+                        "Infomation", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
                     ControlEnabled(true);
                     MainForm.IsDuringInstallation = false;
                     sw.Stop();
