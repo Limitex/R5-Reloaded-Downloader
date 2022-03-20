@@ -63,7 +63,8 @@ namespace R5_Reloaded_Downloader_GUI
             MainForm.IsDuringInstallation = true;
             ProgressStatusValue = 0;
 
-            mainForm.FullStatusLabel.Text = "Preparing...";
+            mainForm.StepStatusLabel.Text = "Preparing...";
+            mainForm.FullStatusLabel.Text = "";
             var DirectionPath = mainForm.PathSelectTextBox.Text ?? string.Empty;
             var shortcutCreate_desktop = mainForm.CreateDesktopShortcutCheckBox.Checked;
             var shortcutCreate_startmenu = mainForm.AddToStartMenuShortcutCheckBox.Checked;
@@ -78,7 +79,7 @@ namespace R5_Reloaded_Downloader_GUI
                 {
                     ControlEnabled(true);
                     MainForm.IsDuringInstallation = false;
-                    mainForm.FullStatusLabel.Text = "...";
+                    mainForm.StepStatusLabel.Text = "...";
                     return;
                 }
                 ConsoleExpansion.LogError("There is not enough space to install.");
@@ -95,14 +96,14 @@ namespace R5_Reloaded_Downloader_GUI
                 {
                     ControlEnabled(true);
                     MainForm.IsDuringInstallation = false;
-                    mainForm.FullStatusLabel.Text = "...";
+                    mainForm.StepStatusLabel.Text = "...";
                     return;
                 }
             }
 
-            mainForm.FullStatusLabel.Text = "Deleteing...";
+            mainForm.StepStatusLabel.Text = "Deleteing...";
             DirectoryExpansion.DirectoryDelete(DirectionPath);
-            mainForm.FullStatusLabel.Text = "...";
+            mainForm.StepStatusLabel.Text = "...";
 
             if (MessageBox.Show("Ready was exit.\n" +
                 "Do you want to start the installation?\n" +
@@ -111,11 +112,10 @@ namespace R5_Reloaded_Downloader_GUI
             {
                 ControlEnabled(true);
                 MainForm.IsDuringInstallation = false;
-                mainForm.FullStatusLabel.Text = "...";
                 return;
             }
 
-            mainForm.FullStatusLabel.Text = "Starting...";
+            mainForm.StepStatusLabel.Text = "Starting...";
             Task.Run(() =>
             {
                 while (MainForm.IsDuringInstallation)
@@ -185,7 +185,8 @@ namespace R5_Reloaded_Downloader_GUI
                 {
                     mainForm.FullProgressBar.Value = mainForm.FullProgressBar.Maximum;
                     mainForm.MonoProgressBar.Value = mainForm.MonoProgressBar.Maximum;
-                    mainForm.FullStatusLabel.Text = "Done.";
+                    mainForm.StepStatusLabel.Text = "Done.";
+                    mainForm.FullStatusLabel.Text = "";
                     ControlEnabled(true);
                     MainForm.IsDuringInstallation = false;
                     sw.Stop();
@@ -222,10 +223,10 @@ namespace R5_Reloaded_Downloader_GUI
             mainForm.FullProgressBar.Value = progress < MaxProgressValue ? progress : MaxProgressValue;
         }
 
-        private void SetStepStatusAutoCount(string str = "")
+        private void SetStepStatusAutoCount(string str = "", bool isCount = true)
         {
             mainForm.Invoke(new Delegate(() => {
-                ProgressStatusValue++;
+                if (isCount) ProgressStatusValue++;
                 mainForm.StepStatusLabel.Text = "Step (" + ProgressStatusValue + "/" + NumOfCalls_SetStepStatusAutoCount + ")" + (str != "" ? " : " : "") + str;
             }));
         }

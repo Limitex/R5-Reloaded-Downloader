@@ -186,7 +186,6 @@
             this.FullStatusLabel.Name = "FullStatusLabel";
             this.FullStatusLabel.Size = new System.Drawing.Size(331, 45);
             this.FullStatusLabel.TabIndex = 15;
-            this.FullStatusLabel.Text = "...";
             // 
             // InstallButton
             // 
