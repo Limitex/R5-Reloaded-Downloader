@@ -23,12 +23,12 @@ namespace R5_Reloaded_Downloader_GUI
         private static readonly string WorldsEdgeAfterDarkPath = "package";
         private static readonly string ExecutableFileName = "launcher.exe";
         private static readonly long AboutByteSize = 64L * 1024L * 1024L * 1024L;
-
         private static readonly int MaxPercentValue = 100;
-        private static readonly int ProgressStatusMaxValue = 10;
-        private static int ProgressStatusValue = 0;
 
+        private static readonly int ProgressStatusMaxValue = 10;
+        
         private static Stopwatch sw = new Stopwatch();
+        private static int ProgressStatusValue = 0;
         private static string? TitleText;
 
         public Installer(MainForm form)
@@ -61,6 +61,7 @@ namespace R5_Reloaded_Downloader_GUI
         {
             ControlEnabled(false);
             MainForm.IsDuringInstallation = true;
+            ProgressStatusValue = 0;
 
             mainForm.FullStatusLabel.Text = "Preparing...";
             var DirectionPath = mainForm.PathSelectTextBox.Text ?? string.Empty;
@@ -131,31 +132,31 @@ namespace R5_Reloaded_Downloader_GUI
             Task.Run(() => {
                 var download = new Download(DirectionPath);
                 download.ProgressEventReceives += HttpClientProcess_EventHandler;
-                SetStepStatus(1, "downloading detours r5...");
+                SetStepStatus("downloading detours r5...");
                 var detoursR5DirPath = download.Run(WebGetLinks.DetoursR5());
-                SetStepStatus(2, "downloading scripts r5...");
+                SetStepStatus("downloading scripts r5...");
                 var scriptsR5DirPath = download.Run(WebGetLinks.ScriptsR5());
-                SetStepStatus(3, "downloading r5 updater...");
+                SetStepStatus("downloading r5 updater...");
                 var updaterR5FilePath = download.Run(WebGetLinks.UpdaterR5());
-                SetStepStatus(4, "downloading worlds edge after dark...");
+                SetStepStatus("downloading worlds edge after dark...");
                 var worldsEdgeAfterDarkDirPath = download.Run(WebGetLinks.WorldsEdgeAfterDark());
-                SetStepStatus(5, "downloading apex client s3...");
+                SetStepStatus("downloading apex client s3...");
                 var apexClientDirPath = download.Run(WebGetLinks.ApexClient()); 
                 download.Dispose();
 
                 var extractor = new Extractor();
                 extractor.ProgressEventReceives += Extractor_EventHandler;
-                SetStepStatus(6, "extracting detours r5...");
+                SetStepStatus("extracting detours r5...");
                 detoursR5DirPath = extractor.Run(detoursR5DirPath);
-                SetStepStatus(7, "extracting scripts r5...");
+                SetStepStatus("extracting scripts r5...");
                 scriptsR5DirPath = extractor.Run(scriptsR5DirPath);
-                SetStepStatus(8, "extracting worlds edge after dark...");
+                SetStepStatus("extracting worlds edge after dark...");
                 worldsEdgeAfterDarkDirPath = extractor.Run(worldsEdgeAfterDarkDirPath);
-                SetStepStatus(9, "extracting apex client s3...");
+                SetStepStatus("extracting apex client s3...");
                 apexClientDirPath = extractor.Run(apexClientDirPath);
                 extractor.Dispose();
 
-                SetStepStatus(10);
+                SetStepStatus();
                 mainForm.Invoke(new Delegate(() => mainForm.FullStatusLabel.Text = "Creating the R5-Reloaded..."));
                 FileExpansion.Move(updaterR5FilePath, apexClientDirPath);
                 DirectoryExpansion.MoveOverwrite(detoursR5DirPath, apexClientDirPath);
@@ -221,11 +222,11 @@ namespace R5_Reloaded_Downloader_GUI
             mainForm.FullProgressBar.Value = progress < MaxProgressValue ? progress : MaxProgressValue;
         }
 
-        private void SetStepStatus(int value, string str = "")
+        private void SetStepStatus(string str = "")
         {
             mainForm.Invoke(new Delegate(() => {
-                ProgressStatusValue = value;
-                mainForm.StepStatusLabel.Text = "Step (" + value + "/" + ProgressStatusMaxValue + ")" + (str != "" ? " : " : "") + str;
+                ProgressStatusValue++;
+                mainForm.StepStatusLabel.Text = "Step (" + ProgressStatusValue + "/" + ProgressStatusMaxValue + ")" + (str != "" ? " : " : "") + str;
             }));
         }
     }
