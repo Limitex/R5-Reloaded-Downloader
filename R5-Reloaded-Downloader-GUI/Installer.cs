@@ -23,9 +23,9 @@ namespace R5_Reloaded_Downloader_GUI
         private static readonly string WorldsEdgeAfterDarkPath = "package";
         private static readonly string ExecutableFileName = "launcher.exe";
         private static readonly long AboutByteSize = 64L * 1024L * 1024L * 1024L;
-
+        
+        private static readonly int ProgressStatusMaxValue = 10;
         private static int ProgressStatusValue = 0;
-        private static int ProgressStatusMaxValue = 10;
 
         private static Stopwatch sw = new Stopwatch();
         private static string? TitleText;
@@ -215,8 +215,10 @@ namespace R5_Reloaded_Downloader_GUI
 
         private void SetFullProgressValue(double value)
         {
-            var progress = (int)((1000f * ProgressStatusValue + value * 10f) / ProgressStatusMaxValue);
-            mainForm.FullProgressBar.Value = progress < 1000f ? progress : 1000;
+            var MaxInputValue = 100;
+            var MaxProgressValue = mainForm.FullProgressBar.Maximum;
+            var progress = (int)(MaxProgressValue * (ProgressStatusValue + (value / MaxInputValue)) / ProgressStatusMaxValue);
+            mainForm.FullProgressBar.Value = progress < MaxProgressValue ? progress : MaxProgressValue;
         }
 
         private void SetStepStatus(int value, string str = "")
