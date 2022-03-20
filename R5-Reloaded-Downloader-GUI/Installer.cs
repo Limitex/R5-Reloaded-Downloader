@@ -181,6 +181,8 @@ namespace R5_Reloaded_Downloader_GUI
 
                 mainForm.Invoke(new Delegate(() =>
                 {
+                    mainForm.FullProgressBar.Value = mainForm.FullProgressBar.Maximum;
+                    mainForm.MonoProgressBar.Value = mainForm.MonoProgressBar.Maximum;
                     mainForm.FullStatusLabel.Text = "Done.";
                     ControlEnabled(true);
                     MainForm.IsDuringInstallation = false;
