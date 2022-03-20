@@ -26,6 +26,12 @@ namespace R5_Reloaded_Downloader_Library.IO
             Marshal.FinalReleaseComObject(shell);
         }
 
+        public static void Move(string sourceFileName, string destFileName)
+        {
+            var f = Path.GetFileName(sourceFileName);
+            System.IO.File.Move(sourceFileName, Path.Combine(destFileName, f));
+        }
+
         public static long GetDriveFreeSpace(string path) =>
             new DriveInfo(Path.GetPathRoot(path) ?? string.Empty).AvailableFreeSpace;
     }
