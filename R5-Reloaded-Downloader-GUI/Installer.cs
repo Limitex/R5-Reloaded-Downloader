@@ -25,7 +25,7 @@ namespace R5_Reloaded_Downloader_GUI
         private static readonly long AboutByteSize = 64L * 1024L * 1024L * 1024L;
 
         private static int ProgressStatusValue = 0;
-        private static int ProgressStatusMaxValue = 9;
+        private static int ProgressStatusMaxValue = 10;
 
         private static Stopwatch sw = new Stopwatch();
         private static string? TitleText;
@@ -130,20 +130,31 @@ namespace R5_Reloaded_Downloader_GUI
             Task.Run(() => {
                 var download = new Download(DirectionPath);
                 download.ProgressEventReceives += HttpClientProcess_EventHandler;
-                var detoursR5DirPath = download.Run(WebGetLinks.DetoursR5()); ProgressStatusValue = 1;
-                var scriptsR5DirPath = download.Run(WebGetLinks.ScriptsR5()); ProgressStatusValue = 2;
-                var updaterR5FilePath = download.Run(WebGetLinks.UpdaterR5()); ProgressStatusValue = 3;
-                var worldsEdgeAfterDarkDirPath = download.Run(WebGetLinks.WorldsEdgeAfterDark()); ProgressStatusValue = 4;
-                var apexClientDirPath = download.Run(WebGetLinks.ApexClient()); ProgressStatusValue = 5;
+                SetStepStatus(1, "downloading detours r5...");
+                var detoursR5DirPath = download.Run(WebGetLinks.DetoursR5());
+                SetStepStatus(2, "downloading scripts r5...");
+                var scriptsR5DirPath = download.Run(WebGetLinks.ScriptsR5());
+                SetStepStatus(3, "downloading r5 updater...");
+                var updaterR5FilePath = download.Run(WebGetLinks.UpdaterR5());
+                SetStepStatus(4, "downloading worlds edge after dark...");
+                var worldsEdgeAfterDarkDirPath = download.Run(WebGetLinks.WorldsEdgeAfterDark());
+                SetStepStatus(5, "downloading apex client s3...");
+                var apexClientDirPath = download.Run(WebGetLinks.ApexClient()); 
                 download.Dispose();
 
                 var extractor = new Extractor();
                 extractor.ProgressEventReceives += Extractor_EventHandler;
-                detoursR5DirPath = extractor.Run(detoursR5DirPath); ProgressStatusValue = 6;
-                scriptsR5DirPath = extractor.Run(scriptsR5DirPath); ProgressStatusValue = 7;
-                worldsEdgeAfterDarkDirPath = extractor.Run(worldsEdgeAfterDarkDirPath); ProgressStatusValue = 8;
-                apexClientDirPath = extractor.Run(apexClientDirPath); ProgressStatusValue = 9;
+                SetStepStatus(6, "extracting detours r5...");
+                detoursR5DirPath = extractor.Run(detoursR5DirPath);
+                SetStepStatus(7, "extracting scripts r5...");
+                scriptsR5DirPath = extractor.Run(scriptsR5DirPath);
+                SetStepStatus(8, "extracting worlds edge after dark...");
+                worldsEdgeAfterDarkDirPath = extractor.Run(worldsEdgeAfterDarkDirPath);
+                SetStepStatus(9, "extracting apex client s3...");
+                apexClientDirPath = extractor.Run(apexClientDirPath);
                 extractor.Dispose();
+
+                SetStepStatus(10);
                 mainForm.Invoke(new Delegate(() => mainForm.FullStatusLabel.Text = "Creating the R5-Reloaded..."));
                 FileExpansion.Move(updaterR5FilePath, apexClientDirPath);
                 DirectoryExpansion.MoveOverwrite(detoursR5DirPath, apexClientDirPath);
@@ -204,6 +215,14 @@ namespace R5_Reloaded_Downloader_GUI
         {
             var progress = (int)((1000f * ProgressStatusValue + value * 10f) / ProgressStatusMaxValue);
             mainForm.FullProgressBar.Value = progress < 1000f ? progress : 1000;
+        }
+
+        private void SetStepStatus(int value, string str = "")
+        {
+            mainForm.Invoke(new Delegate(() => {
+                ProgressStatusValue = value;
+                mainForm.StepStatusLabel.Text = "Step (" + value + "/" + ProgressStatusMaxValue + ")" + (str != "" ? " : " : "") + str;
+            }));
         }
     }
 }
