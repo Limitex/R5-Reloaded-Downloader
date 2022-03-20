@@ -7,18 +7,13 @@ using System.Threading.Tasks;
 
 namespace R5_Reloaded_Downloader_Library.External
 {
-    public class ResourceProcess : IDisposable
+    public class ResourceProcess
     {
         public string GetPath { get; private set; }
 
         public ResourceProcess(string ResourceName)
         {
             GetPath = ExportingFile(Path.Combine(Path.GetTempPath(), ResourceName), ResourceName);
-        }
-
-        public void Dispose()
-        {
-
         }
 
         private static string ExportingFile(string path, string resource)

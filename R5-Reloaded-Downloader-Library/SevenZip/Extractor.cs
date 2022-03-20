@@ -13,17 +13,16 @@ namespace R5_Reloaded_Downloader_Library.SevenZip
     {
         public event EventHandler<ProgressEventArgs>? ProgressEventReceives = null;
 
-        private ResourceProcess SevenZipDll;
+        private static ResourceProcess SevenZipDll = new("7z.dll");
 
         public Extractor()
         {
-            SevenZipDll = new("7z.dll");
             SevenZipBase.SetLibraryPath(SevenZipDll.GetPath);
         }
 
         public void Dispose()
         {
-            SevenZipDll.Dispose();
+
         }
 
         public string Run(string SourceArchive,bool DeleteSource = true, bool DirectoryFix = true)
