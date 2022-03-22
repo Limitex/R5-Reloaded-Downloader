@@ -80,10 +80,10 @@
             this.OfficialWebsiteLinkLabel.AutoSize = true;
             this.OfficialWebsiteLinkLabel.Location = new System.Drawing.Point(12, 176);
             this.OfficialWebsiteLinkLabel.Name = "OfficialWebsiteLinkLabel";
-            this.OfficialWebsiteLinkLabel.Size = new System.Drawing.Size(165, 15);
+            this.OfficialWebsiteLinkLabel.Size = new System.Drawing.Size(134, 15);
             this.OfficialWebsiteLinkLabel.TabIndex = 8;
             this.OfficialWebsiteLinkLabel.TabStop = true;
-            this.OfficialWebsiteLinkLabel.Text = "https://r5reloaded.gitbook.io/";
+            this.OfficialWebsiteLinkLabel.Text = "https://r5reloaded.com/";
             // 
             // OfficialDiscordLinkLabel
             // 
