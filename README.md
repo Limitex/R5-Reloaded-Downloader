@@ -22,8 +22,13 @@ Either can be installed.
 
 # How to use
 
-uninstalled...
+## CLI
 
-## Pre release
+Start the downloader and enter y.
+A directory called R5-Reloaded is created in the same directory, and R5-Reloaded is created in that directory.
 
-Please click on the executable file and allow Windows Defender.
+## GUI
+
+Run and select the location where you want to install R5-Reloaded.
+Click Install to continue.
+R5-Reloaded will be created in the selected directory.
