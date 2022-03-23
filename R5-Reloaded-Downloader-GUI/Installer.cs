@@ -105,7 +105,7 @@ namespace R5_Reloaded_Downloader_GUI
             DirectoryExpansion.DirectoryDelete(DirectionPath);
             mainForm.StepStatusLabel.Text = "...";
 
-            if (MessageBox.Show("Ready was exit.\n" +
+            if (MessageBox.Show("The preparation was finished\n" +
                 "Do you want to start the installation?\n" +
                 "It will take about 60 minutes to complete.", "Infomation",
                 MessageBoxButtons.OKCancel, MessageBoxIcon.Information) == DialogResult.Cancel)
