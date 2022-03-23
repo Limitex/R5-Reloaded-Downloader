@@ -6,7 +6,15 @@ Only C# HttpClient is used for downloading and 7z.dll is used for decompressing 
 
 Torrents are not used.
 
-During the use of the downloader, 7z.dll is created in the Temp directory, but can be removed after execution.
+# Files included within this app
+
+## 7z.dll
+
+This application requires "7z.dll" to decompress the 7z archive, so it is generated in the Temp directory at runtime.
+Since it is in use during execution, it cannot be deleted, but it can be removed after the application is terminated.
+
+https://sevenzip.osdn.jp/
+
 
 # ApplicationType
 
