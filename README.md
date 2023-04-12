@@ -1,4 +1,4 @@
-# [Deprecated] R5-Reloaded-Downloader
+# [Not supported] R5-Reloaded-Downloader
 
 A safer and more stable of R5 Reloaded Downloader that replaces R5 Reloaded Installer.
 
